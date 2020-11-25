@@ -1,8 +1,6 @@
 package me.weiking1021.opencv;
 
 import java.awt.Image;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.File;
@@ -114,34 +112,6 @@ public class Util {
 	        ImageIcon image_icon = new ImageIcon(buffered_image.getScaledInstance(512, 512, Image.SCALE_DEFAULT));
 	        
 	        JLabel label = new JLabel(image_icon);
-	        
-	        label.addMouseListener(new MouseListener() {
-
-				@Override
-				public void mouseClicked(MouseEvent e) {}
-
-				@Override
-				public void mousePressed(MouseEvent e) {
-					
-					int x = e.getX();
-					int y = e.getY();
-					
-					byte[] data = new byte[OpenCVProject2.m.channels()];
-					
-					OpenCVProject2.m.get(y, x, data);
-					
-					System.out.println(x + ", " + y + " -- " + data[0] + ", " + data[1] + ", " + data[2]);
-				}
-
-				@Override
-				public void mouseReleased(MouseEvent e) {}
-
-				@Override
-				public void mouseEntered(MouseEvent e) {}
-
-				@Override
-				public void mouseExited(MouseEvent e) {}
-			});
 	        
 	        label.setSize(512, 512);
 	        
