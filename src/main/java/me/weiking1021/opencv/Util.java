@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.highgui.HighGui;
+import org.opencv.imgproc.Imgproc;
 
 public class Util {
 
@@ -105,7 +106,7 @@ public class Util {
 	        /*int w = buffered_image.getWidth();
 	        int h = buffered_image.getHeight();*/
 
-	        frame.setSize(512, 512 + offset_y);
+	        frame.setSize(512, 508 + offset_y);
 	        
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	        
@@ -133,5 +134,10 @@ public class Util {
 		
 		ImageIO.write(buffered_image, "png", file);
 		
+	}
+	
+	public static void bgr2hsv(Mat src_mat, Mat dst_mat) {
+		
+		Imgproc.cvtColor(src_mat, dst_mat, Imgproc.COLOR_BGR2HSV);
 	}
 }
