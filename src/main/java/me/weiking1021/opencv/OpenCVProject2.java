@@ -44,17 +44,19 @@ public class OpenCVProject2 {
 
 			Util.showImage(file_name, Util.cvMat2image(bgr_mat));
 			
-			Mat hsv_skin_mat = findHsvSkin(hsv_mat);
+//			Mat skin_mat = findHsvSkin(hsv_mat);
 			
-//			Util.showImage(file_name + " (Original)", hsv_skin_mat);
+			Mat skin_mat = findBgrSkin(bgr_mat);
 			
-//			Util.showImage(file_name + " (Close)", close(hsv_skin_mat));
+			Util.showImage(file_name + " (Original)", skin_mat);
 			
-			Util.showImage(file_name, writeText(myErosion(myDilation(hsv_skin_mat)), "MyClose"));
+//			Util.showImage(file_name + " (Close)", close(skin_mat));
+			
+//			Util.showImage(file_name, writeText(myErosion(myDilation(skin_mat)), "MyClose"));
 
-//			Util.showImage(file_name + " (Open)", open(hsv_skin_mat));
+//			Util.showImage(file_name + " (Open)", open(skin_mat));
 			
-			Util.showImage(file_name, writeText(myDilation(myErosion(hsv_skin_mat)), "MyOpen"));
+//			Util.showImage(file_name, writeText(myDilation(myErosion(skin_mat)), "MyOpen"));
 		}
 		catch (Exception e) {
 
@@ -78,6 +80,31 @@ public class OpenCVProject2 {
 				int v = data[2] < 0 ? data[2] + 256 : data[2];
 
 				if (0 <= h && h <= 50 && 30 <= s && 90 <= v) {
+
+					result.put(i, j, new byte[] { -1 });
+				}
+			}
+		}	
+		
+		return result;
+	}
+	
+	private static Mat findBgrSkin(Mat bgr_mat) {
+
+		Mat result = Mat.zeros(bgr_mat.size(), CvType.CV_8UC1);
+
+		for (int i = 0; i < bgr_mat.rows(); i++) {
+			for (int j = 0; j < bgr_mat.cols(); j++) {
+
+				byte[] data = new byte[bgr_mat.channels()];
+
+				bgr_mat.get(i, j, data);
+
+				int b = data[0] < 0 ? data[0] + 256 : data[0];
+				int g = data[1] < 0 ? data[1] + 256 : data[1];
+				int r = data[2] < 0 ? data[2] + 256 : data[2];
+				
+				if (170 <= r && 140 <= g && 100 <= b) {
 
 					result.put(i, j, new byte[] { -1 });
 				}
